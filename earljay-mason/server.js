@@ -40,7 +40,6 @@ app.get('/articles', (request, response) => {
   // It is referring to 3. No article.js method. Doing 'C' in CRUD.
   client.query('SELECT * FROM ARTICLES')
     .then(function (result) {
-      console.log(result.rows)
       response.send(result.rows);
     })
     .catch(function (err) {
@@ -135,10 +134,8 @@ function loadArticles() {
       // REVIEW: result.rows is an array of objects that PostgreSQL returns as a response to a query.
       // If there is nothing on the table, then result.rows[0] will be undefined, which will make count undefined. parseInt(undefined) returns NaN. !NaN evaluates to true.
       // Therefore, if there is nothing on the table, line 158 will evaluate to true and enter into the code block.
-      console.log('above if', result);
 
       if (!parseInt(result.rows[0].count)) {
-        console.log('in if');
 
         fs.readFile('./public/data/hackerIpsum.json', 'utf8', (err, fd) => {
           JSON.parse(fd).forEach(ele => {
@@ -154,7 +151,6 @@ function loadArticles() {
       }
     })
     .catch(err => {
-      console.log('IN ERR')
       console.error(err);
     })
 }
@@ -173,7 +169,6 @@ function loadDB() {
       body TEXT NOT NULL);`
   )
     .then(() => {
-      console.log('in then')
       loadArticles();
     })
     .catch(err => {
