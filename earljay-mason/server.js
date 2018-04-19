@@ -76,7 +76,14 @@ app.put('/articles/:id', (request, response) => {
   // COMMENT - DONE: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
   // It is referring to #4. No methods from article.js. Doing 'C' in CRUD.
   client.query(
-    ` `, []
+    `UPDATE articles SET articles(title, author, "authorUrl", category, "publishedOn", body) VALUES ($1, $2, $3, $4, $5, $6)`, [
+      request.body.title,
+      request.body.author,
+      request.body.authorUrl,
+      request.body.category,
+      request.body.publishedOn,
+      request.body.body
+    ]
   )
     .then(() => {
       response.send('update complete')
